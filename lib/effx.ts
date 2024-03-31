@@ -9,9 +9,9 @@ interface EffxParams {
 }
 
 export class Effx {
-  context: AudioContext;
-  outputNode: GainNode;
-  voices: Voice[] = [];
+  private context: AudioContext;
+  private outputNode: GainNode;
+  private voices: Voice[] = [];
 
   constructor({ outputGain }: EffxParams) {
     const context = new window.AudioContext({
