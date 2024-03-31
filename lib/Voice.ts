@@ -6,11 +6,17 @@ export interface ADSR {
   sustainTime: number;
   sustainValue: number;
   releaseTime: number;
-  releaseValue: number;
 }
 
+export type OscillatorTypes =
+  | 'sawtooth'
+  | 'sine'
+  | 'square'
+  | 'triangle'
+  | 'whiteNoise';
+
 export interface VoiceDescription {
-  oscillatorType: 'sawtooth' | 'sine' | 'square' | 'triangle' | 'whiteNoise';
+  oscillatorType: OscillatorTypes;
   frequency: number;
   adsr: ADSR;
 }
@@ -96,7 +102,6 @@ export class Voice {
       sustainTime,
       sustainValue,
       releaseTime,
-      releaseValue,
     } = adsr;
     const gainNode = this.gainNode;
     if (!gainNode) return;
@@ -112,7 +117,7 @@ export class Voice {
 
     // release
     gainNode.gain.linearRampToValueAtTime(
-      releaseValue,
+      0,
       now + attackTime + decayTime + sustainTime + releaseTime
     );
   }

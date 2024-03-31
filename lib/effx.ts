@@ -1,4 +1,6 @@
 import { Voice, VoiceDescription } from './Voice';
+import type { OscillatorTypes } from './Voice';
+export { OscillatorTypes };
 
 export interface Sound {
   voices: VoiceDescription[];
