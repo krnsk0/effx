@@ -1,5 +1,5 @@
 
-import { Effx } from './lib/main';
+import { Effx } from 'effx';
 
 function App() {
 
