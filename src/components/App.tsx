@@ -1,18 +1,15 @@
-
 import { Effx } from 'effx';
-import { Adsr } from './Adsr';
+import { Adsr } from './Adsr/Adsr';
 
 function App() {
-
   return (
     <>
       <Adsr />
     </>
-  )
+  );
 }
 
-export default App
-
+export default App;
 
 let effx: Effx | undefined = undefined;
 window.addEventListener('keydown', (event) => {
