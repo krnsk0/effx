@@ -1,4 +1,5 @@
 export interface ADSR {
+  startTime: number;
   startValue: number;
   attackTime: number;
   attackValue: number;
@@ -95,6 +96,7 @@ export class Voice {
   private scheduleGainADSR(adsr: ADSR) {
     const now = this.context.currentTime;
     const {
+      startTime,
       startValue,
       attackTime,
       attackValue,
@@ -106,19 +108,22 @@ export class Voice {
     const gainNode = this.gainNode;
     if (!gainNode) return;
     // attack
-    gainNode.gain.setValueAtTime(startValue, now);
-    gainNode.gain.linearRampToValueAtTime(attackValue, now + attackTime);
+    gainNode.gain.setValueAtTime(startValue, now + startTime);
+    gainNode.gain.linearRampToValueAtTime(
+      attackValue,
+      now + startTime + attackTime
+    );
 
     // decay / sustain
     gainNode.gain.linearRampToValueAtTime(
       sustainValue,
-      now + attackTime + decayTime
+      now + startTime + attackTime + decayTime
     );
 
     // release
     gainNode.gain.linearRampToValueAtTime(
       0,
-      now + attackTime + decayTime + sustainTime + releaseTime
+      now + startTime + attackTime + decayTime + sustainTime + releaseTime
     );
   }
 }

@@ -4,6 +4,7 @@ import { Model, model, tProp, types } from 'mobx-keystone';
 export class Voice extends Model({
   oscillatorType: tProp(types.string, 'sine').withSetter(),
   frequency: tProp(types.number, 220).withSetter(),
+  startTime: tProp(types.number, 0).withSetter(),
   startValue: tProp(types.number, 0).withSetter(),
   attackTime: tProp(types.number, 0.1).withSetter(),
   attackValue: tProp(types.number, 0.9).withSetter(),

@@ -1,22 +1,39 @@
 import { useEffect, useRef, useState } from 'react';
 import './Adsr.css';
 import { useDragHandler } from './useDragHandler';
+import { Voice } from '../../store/voice';
+import { observer } from 'mobx-react-lite';
 
 const TOTAL_TIME = 0.5;
 
 const WIDTH = 1000;
 const HEIGHT = 400;
 
-export function Adsr() {
+interface AdsrProps {
+  voice: Voice;
+}
+
+export const Adsr = observer(({ voice }: AdsrProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
-  const [startTime, setStartTime] = useState(0.1);
-  const [attackTime, setAttackTime] = useState(0.05);
-  const [attackGain, setAttackGain] = useState(1);
-  const [decayTime, setDecayTime] = useState(0.05);
-  const [sustainGain, setSustainGain] = useState(0.5);
-  const [sustainTime, setSustainTime] = useState(0.2);
-  const [releaseTime, setReleaseTime] = useState(0.1);
+
+  const {
+    startTime,
+    attackTime,
+    attackValue,
+    decayTime,
+    sustainValue,
+    sustainTime,
+    releaseTime,
+  } = voice;
+
+  const setStartTime = (v: number) => voice.setStartTime(v);
+  const setAttackTime = (v: number) => voice.setAttackTime(v);
+  const setAttackValue = (v: number) => voice.setAttackValue(v);
+  const setDecayTime = (v: number) => voice.setDecayTime(v);
+  const setSustainValue = (v: number) => voice.setSustainValue(v);
+  const setSustainTime = (v: number) => voice.setSustainTime(v);
+  const setReleaseTime = (v: number) => voice.setReleaseTime(v);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -45,20 +62,20 @@ export function Adsr() {
       // attack
       context.lineTo(
         ((startTime + attackTime) / TOTAL_TIME) * WIDTH,
-        HEIGHT - attackGain * HEIGHT
+        HEIGHT - attackValue * HEIGHT
       );
 
       // decay
       context.lineTo(
         ((startTime + attackTime + decayTime) / TOTAL_TIME) * WIDTH,
-        HEIGHT - HEIGHT * sustainGain
+        HEIGHT - HEIGHT * sustainValue
       );
 
       // sustain
       context.lineTo(
         ((startTime + attackTime + decayTime + sustainTime) / TOTAL_TIME) *
           WIDTH,
-        HEIGHT - HEIGHT * sustainGain
+        HEIGHT - HEIGHT * sustainValue
       );
 
       // release
@@ -74,8 +91,8 @@ export function Adsr() {
   }, [
     startTime,
     attackTime,
-    attackGain,
-    sustainGain,
+    attackValue,
+    sustainValue,
     sustainTime,
     releaseTime,
     context,
@@ -92,35 +109,35 @@ export function Adsr() {
 
   const attackMouseDown = useDragHandler({
     xValue: attackTime,
-    yValue: attackGain,
+    yValue: attackValue,
     WIDTH,
     HEIGHT,
     xMaxValue: TOTAL_TIME - startTime - sustainTime - decayTime - releaseTime,
     yMaxValue: 1,
     xSetter: setAttackTime,
-    ySetter: setAttackGain,
+    ySetter: setAttackValue,
   });
 
   const decayMouseDown = useDragHandler({
     xValue: decayTime,
-    yValue: attackGain,
+    yValue: attackValue,
     WIDTH,
     HEIGHT,
     xMaxValue: TOTAL_TIME - startTime - attackTime - sustainTime - releaseTime,
     yMaxValue: 1,
     xSetter: setDecayTime,
-    ySetter: setAttackGain,
+    ySetter: setAttackValue,
   });
 
   const sustainMouseDown = useDragHandler({
     xValue: sustainTime,
-    yValue: sustainGain,
+    yValue: sustainValue,
     WIDTH,
     HEIGHT,
     xMaxValue: TOTAL_TIME - startTime - attackTime - decayTime - releaseTime,
     yMaxValue: 1,
     xSetter: setSustainTime,
-    ySetter: setSustainGain,
+    ySetter: setSustainValue,
   });
 
   const releaseMouseDown = useDragHandler({
@@ -188,4 +205,4 @@ export function Adsr() {
       ></div>
     </div>
   );
-}
+});
