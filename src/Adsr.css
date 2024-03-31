@@ -1,0 +1,19 @@
+.adsr-outer {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+
+.adsr-height {
+  height: 100%;
+}
+
+.adsr-border {
+  border-right: 2px solid lightgrey;
+}
+
+.canvas {
+  position: absolute;
+  z-index: -1;
+}

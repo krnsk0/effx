@@ -1,11 +1,12 @@
 
 import { Effx } from 'effx';
+import { Adsr } from './Adsr';
 
 function App() {
 
   return (
     <>
-     hello
+      <Adsr />
     </>
   )
 }
