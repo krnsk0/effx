@@ -25,15 +25,15 @@ export const Adsr = observer(({ voice }: AdsrProps) => {
     sustainValue,
     sustainTime,
     releaseTime,
-  } = voice;
+  } = voice.adsr;
 
-  const setStartTime = (v: number) => voice.setStartTime(v);
-  const setAttackTime = (v: number) => voice.setAttackTime(v);
-  const setAttackValue = (v: number) => voice.setAttackValue(v);
-  const setDecayTime = (v: number) => voice.setDecayTime(v);
-  const setSustainValue = (v: number) => voice.setSustainValue(v);
-  const setSustainTime = (v: number) => voice.setSustainTime(v);
-  const setReleaseTime = (v: number) => voice.setReleaseTime(v);
+  const setStartTime = (v: number) => voice.adsr.setStartTime(v);
+  const setAttackTime = (v: number) => voice.adsr.setAttackTime(v);
+  const setAttackValue = (v: number) => voice.adsr.setAttackValue(v);
+  const setDecayTime = (v: number) => voice.adsr.setDecayTime(v);
+  const setSustainValue = (v: number) => voice.adsr.setSustainValue(v);
+  const setSustainTime = (v: number) => voice.adsr.setSustainTime(v);
+  const setReleaseTime = (v: number) => voice.adsr.setReleaseTime(v);
 
   useEffect(() => {
     if (canvasRef.current) {

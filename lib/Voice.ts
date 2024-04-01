@@ -9,12 +9,13 @@ export interface ADSR {
   releaseTime: number;
 }
 
-export type OscillatorTypes =
-  | 'sawtooth'
-  | 'sine'
-  | 'square'
-  | 'triangle'
-  | 'whiteNoise';
+export enum OscillatorTypes {
+  Sawtooth = 'sawtooth',
+  Sine = 'sine',
+  Square = 'square',
+  Triangle = 'triangle',
+  WhiteNoise = 'whiteNoise',
+}
 
 export interface VoiceDescription {
   oscillatorType: OscillatorTypes;
